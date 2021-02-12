@@ -1,4 +1,6 @@
 en:
   js:
     groups:
-      vc_request: "Verify Credential"
+      verify_credentials: "Verify Credentials"
+      allow_membership_by_verifiable_credentials: "Allow users to join by verifiable credentials"
+      verifiable_credentials_redirect: "Redirect users to url upon verification"

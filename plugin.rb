@@ -6,6 +6,8 @@
 # authors: Angus McLeod
 # url: https://github.com/paviliondev/discourse-verifiable-credentials
 
+register_asset "stylesheets/verifiable-credentials.scss"
+
 if respond_to?(:register_svg_icon)
   register_svg_icon "passport"
 end
@@ -21,4 +23,10 @@ after_initialize do
   ].each do |path|
     load File.expand_path(path, __FILE__)
   end
+  
+  register_editable_group_custom_field(:allow_membership_by_verifiable_credentials)
+  register_group_custom_field_type('allow_membership_by_verifiable_credentials', :boolean)
+  register_editable_group_custom_field(:verifiable_credentials_redirect)
+  register_group_custom_field_type('verifiable_credentials_redirect', :string)
+  add_to_serializer(:basic_group, :custom_fields) { object.custom_fields }
 end

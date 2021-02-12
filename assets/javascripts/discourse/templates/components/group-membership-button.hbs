@@ -10,18 +10,22 @@
       icon="user-times"
       label="groups.leave"
       disabled=updatingMembership}}
-{{else if canVerifyCredentials}}
-  {{d-button action=(action "verifyCredentials")
-      class="group-verify-request"
-      disabled=loading
-      icon="passport"
-      label="groups.vc_request"}}
-{{else if canRequestMembership}}
-  {{d-button action=(action "showRequestMembershipForm")
-      class="group-index-request"
-      disabled=loading
-      icon="user-plus"
-      label="groups.request"}}
+{{else if canJoin}}
+  {{#if canAccessByVerifiedCredentials}}
+    {{d-button action=(action "verifyCredentials")
+        class="group-verify-request btn-primary"
+        disabled=loading
+        icon="passport"
+        label="groups.verify_credentials"}}
+    {{conditional-loading-spinner condition=loading size="small"}}
+  {{/if}}
+  {{#if canRequestMembership}}
+    {{d-button action=(action "showRequestMembershipForm")
+        class="group-index-request"
+        disabled=loading
+        icon="user-plus"
+        label="groups.request"}}
+  {{/if}}
 {{else}}
   {{yield}}
 {{/if}}
