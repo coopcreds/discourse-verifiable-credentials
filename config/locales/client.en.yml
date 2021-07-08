@@ -1,6 +1,19 @@
 en:
   js:
     groups:
-      verify_credentials: "Verify Credentials"
+      manage:
+        membership:
+          verifiable_credentials: Verifiable Credentials
       allow_membership_by_verifiable_credentials: "Allow users to join by verifiable credentials"
       verifiable_credentials_redirect: "Redirect users to url upon verification"
+      verifiable_credentials_credential: "Credential that grants access to this group"
+      verifiable_credentials_message: "Message to show before presenting credential"
+
+    verifiable_credentials:
+      button: "Verify Credentials"
+      present:
+        title: "Present your credentials"
+        instructions: Instructions
+        provider:
+          verifiable_credentials_ltd:
+            description: Scan the QR Code and follow any prompts in the "VC Wallet" App. If your credentials check out you'll be automatically added to the group and redirected to the group's page.

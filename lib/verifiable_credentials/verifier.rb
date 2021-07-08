@@ -1,31 +1,25 @@
 class ::VerifiableCredentials::Verifier
   attr_accessor :user,
-                :type
-  
-  def initialize(user: nil, type: nil)
+                :type,
+                :resource
+
+  def initialize(user: nil, type: nil, resource: nil)
     @user = user
     @type = type
+    @resource = resource
   end
-  
-  def perform(presentation, resource: 'group', resource_id: nil)
-    verifier = nil
-    
-    if @type == :vc_ltd
-      verifier = VerifiableCredentials::VCLtd.new 
-    end
-    
-    verified = verifier.verify(presentation)
-    
-    if !verified
-      raise Discourse::InvalidAccess.new('No valid credentials') 
-    end
-    
+
+  def perform(presentation)
+    klass = Module.const_get("VerifiableCredentials::#{@type.to_s.camelize.classify}")
+
+    policy = {
+      type: @resource.custom_fields[:verifiable_credentials_credential]
+    }
+
+    verifier = klass.new(policy)    
     result = ::VerifiableCredentials::VerifierResult.new
-    
-    if resource == 'group' && group = Group.find_by_id(resource_id)
-      result.success = group.add(@user)
-    end
-    
+    result.success = verifier.verify(presentation)
+
     result
   end
   

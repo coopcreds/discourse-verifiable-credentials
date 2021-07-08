@@ -1,10 +1,11 @@
 class ::VerifiableCredentials::VerifierResult
-  attr_accessor :success
-  
+  attr_accessor :success,
+                :resource
+
   def initialize
     @success = false
   end
-  
+
   def success?
     @success
   end

@@ -1,0 +1,4 @@
+en:
+  site_settings:
+    verifiable_credentials_provider: "The verifiable credentials provider"
+    verifiable_credentials_verifier_domain: "The domain of the verifier"

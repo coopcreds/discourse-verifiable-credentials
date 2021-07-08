@@ -16,8 +16,7 @@
         class="group-verify-request btn-primary"
         disabled=loading
         icon="passport"
-        label="groups.verify_credentials"}}
-    {{conditional-loading-spinner condition=loading size="small"}}
+        label="verifiable_credentials.button"}}
   {{/if}}
   {{#if canRequestMembership}}
     {{d-button action=(action "showRequestMembershipForm")

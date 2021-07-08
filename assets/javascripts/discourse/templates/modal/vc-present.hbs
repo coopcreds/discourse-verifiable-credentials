@@ -1,0 +1,14 @@
+{{#d-modal-body title="verifiable_credentials.present.title"}}
+  {{#if message}}
+    {{{message}}}
+  {{/if}}
+
+  <h3>{{i18n "verifiable_credentials.present.instructions"}}</h3>
+  <p>{{description}}</p>
+
+  {{#if hasQRCode}}
+    <div class="qr-container">
+      <div id="qr-code"></div>
+    </div>
+  {{/if}}
+{{/d-modal-body}}

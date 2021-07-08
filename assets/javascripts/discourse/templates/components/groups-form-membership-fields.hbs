@@ -94,8 +94,20 @@
     
     {{i18n "groups.allow_membership_by_verifiable_credentials"}}
   </label>
-  
-  {{#if model.custom_fields.allow_membership_by_verifiable_credentials}}
+</div>
+
+{{#if model.custom_fields.allow_membership_by_verifiable_credentials}}
+  <div class="control-group verifiable-credentials">
+    <label class="control-label">{{i18n "groups.manage.membership.verifiable_credentials"}}</label>
+    <div>
+      <label for="verifiable-credentials-redirect">
+        {{i18n "groups.verifiable_credentials_credential"}}
+      </label>
+
+      {{input name="verifiable-credentials-credential"
+          class="verifiable-credentials-credential input-xxlarge"
+          value=model.custom_fields.verifiable_credentials_credential}}
+    </div>
     <div>
       <label for="verifiable-credentials-redirect">
         {{i18n "groups.verifiable_credentials_redirect"}}
@@ -105,5 +117,14 @@
           class="verifiable-credentials-redirect input-xxlarge"
           value=model.custom_fields.verifiable_credentials_redirect}}
     </div>
-  {{/if}}
-</div>
+    <div>
+      <label for="verifiable-credentials-redirect">
+        {{i18n "groups.verifiable_credentials_message"}}
+      </label>
+
+      {{textarea name="verifiable-credentials-message"
+          class="verifiable-credentials-message"
+          value=model.custom_fields.verifiable_credentials_message}}
+    </div>
+  </div>
+{{/if}}

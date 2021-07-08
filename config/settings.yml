@@ -1,0 +1,8 @@
+plugins:
+  verifiable_credentials_provider:
+    type: enum
+    client: true
+    default: ""
+    choices:
+      - verifiable_credentials_ltd
+  verifiable_credentials_verifier_domain:
