@@ -3,18 +3,16 @@ import discourseComputed from "discourse-common/utils/decorators";
 import { camelize } from "@ember/string";
 import { scheduleOnce } from "@ember/runloop";
 import { alias } from "@ember/object/computed";
+import { ajax } from "discourse/lib/ajax";
 
 export default Controller.extend({
+  loadingQRCode: false,
   hasQRCode: true,
   message: alias('model.custom_fields.verifiable_credentials_message'),
 
   perform() {
     const provider = this.siteSettings.verifiable_credentials_provider;
-    const result = this[camelize(provider)]();
-
-    scheduleOnce('afterRender', () => {
-      new QRCode(document.getElementById("qr-code"), result);
-    });
+    this[camelize(provider)]();
   },
 
   @discourseComputed
@@ -23,8 +21,29 @@ export default Controller.extend({
     return I18n.t(`verifiable_credentials.present.provider.${provider}.description`);
   },
 
-  verifiableCredentialsLtd() {
+  mattr() {
     const group = this.model;
+    const domain = this.siteSettings.verifiable_credentials_verifier_domain;
+
+    this.set('loadingQRCode', true);
+
+    ajax('/vc/create-presentation-request', {
+      type: 'POST',
+      data: {
+        resource_type: 'group',
+        resource_id: group.id,
+        type: 'mattr'
+      }
+    }).then(result => {
+      this.set('loadingQRCode', false);
+
+      if (result.success) {
+        this.set('QRData', `didcomm://${domain}/?request=${result.jws}`);
+      }
+    });
+  },
+
+  verifiableCredentialsLtd() {
     const user = this.currentUser;
     const discourseUrl =  window.location.protocol + "//" + window.location.hostname;
     const data = {
@@ -40,12 +59,12 @@ export default Controller.extend({
       },
       "returnResults": [
         {
-          "internet": `${discourseUrl}/vc/verify`
+          "internet": `${discourseUrl}/vc/verify-vcltd`
         }
       ]
     };
 
     const encodedRequest = btoa(JSON.stringify(data)).replace(/\+/g, '-').replace(/\//g, '_').replace(/\=+$/, '');
-    return `vcwallet://getvp?request=${encodedRequest}`;
+    this.set('QRData', encodedRequest);
   }
 });

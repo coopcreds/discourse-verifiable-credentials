@@ -5,4 +5,10 @@ plugins:
     default: ""
     choices:
       - verifiable_credentials_ltd
+      - mattr
   verifiable_credentials_verifier_domain:
+    client: true
+    default: ""
+  verifiable_credentials_verifier_did: ""
+  verifiable_credentials_mattr_client_id: ""
+  verifiable_credentials_mattr_client_secret: ""

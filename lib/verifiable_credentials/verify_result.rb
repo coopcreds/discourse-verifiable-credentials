@@ -1,4 +1,6 @@
-class ::VerifiableCredentials::VerifierResult
+# frozen_string_literal: true
+
+class ::VerifiableCredentials::VerifyResult
   attr_accessor :success,
                 :resource
 

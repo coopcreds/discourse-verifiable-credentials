@@ -1,29 +1,58 @@
-class ::VerifiableCredentials::Verifier
-  attr_accessor :user,
-                :type,
-                :resource
+# frozen_string_literal: true
 
-  def initialize(user: nil, type: nil, resource: nil)
-    @user = user
-    @type = type
-    @resource = resource
+class ::VerifiableCredentials::Verifier
+  attr_reader :handler,
+              :domain
+
+  def initialize(handler)
+    @handler = handler
+    @domain = SiteSetting.verifiable_credentials_verifier_domain
   end
 
-  def perform(presentation)
-    klass = Module.const_get("VerifiableCredentials::#{@type.to_s.camelize.classify}")
+  def create_presentation_request
+    ## Implementated by verifier classes
+  end 
 
-    policy = {
-      type: @resource.custom_fields[:verifiable_credentials_credential]
+  def verify(data)
+    ## Implementated by verifier classes
+  end
+
+  def request(type, path, body = {})
+    if requires_key
+      api_key = get_api_key
+    end
+
+    headers = {
+      "Accept" => "*/*"
+    }
+    args = {
+      method: type
     }
 
-    verifier = klass.new(policy)    
-    result = ::VerifiableCredentials::VerifierResult.new
-    result.success = verifier.verify(presentation)
+    if requires_key && api_key
+      headers["Authorization"] = "Bearer #{api_key}"
+    end
 
-    result
+    if body.present?
+      headers["Content-Type"] = "application/json"
+      args[:body] = body.to_json
+    end
+
+    url = "https://#{@domain}/#{path}"
+    connection = Excon.new(url, :headers => headers)
+    response = connection.request(args)
+
+    return false unless [201, 200].include?(response.status)
+    return true unless response.body.present?
+
+    begin
+      JSON.parse(response.body)
+    rescue => error
+      false
+    end
   end
-  
-  def verify(presentation)
+
+  def get_api_key
     ## Implementated by verifier classes
-  end   
+  end
 end

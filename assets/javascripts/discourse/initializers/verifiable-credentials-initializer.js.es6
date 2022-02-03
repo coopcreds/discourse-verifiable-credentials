@@ -28,8 +28,6 @@ export default {
         actions: {
           verifyCredentials() {
             if (this.currentUser) {
-              this.set('loading', true);
-
               const controller = showModal("vc-present", {
                 model: this.model 
               });

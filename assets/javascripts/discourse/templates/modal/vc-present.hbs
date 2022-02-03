@@ -1,6 +1,6 @@
 {{#d-modal-body title="verifiable_credentials.present.title"}}
   {{#if message}}
-    {{{message}}}
+    <p>{{{message}}}</p>
   {{/if}}
 
   <h3>{{i18n "verifiable_credentials.present.instructions"}}</h3>
@@ -8,7 +8,20 @@
 
   {{#if hasQRCode}}
     <div class="qr-container">
-      <div id="qr-code"></div>
+      {{#if loadingQRCode}}
+        {{loading-spinner}}
+      {{else}}
+        {{#if QRData}}
+          <img
+            src="https://api.qrserver.com/v1/create-qr-code/??&size=400x400&data={{QRData}}"
+            alt={{i18n "verifiable_credentials.present.qr_code.title"}}
+            title={{i18n "verifiable_credentials.present.qr_code.title"}}
+            class="qr-code"
+            />
+        {{else}}
+          {{i18n "verifiable_credentials.present.qr_code.failed"}}
+        {{/if}}
+      {{/if}}
     </div>
   {{/if}}
 {{/d-modal-body}}

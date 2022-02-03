@@ -1,7 +1,9 @@
 VerifiableCredentials::Engine.routes.draw do
-  post "verify" => "verify#perform"
+  post "create-presentation-request" => "presentation#create_request"
+  post "verify-vcltd" => "verify#verify"
+  post "verify-mattr" => "verify#verify"
 end
 
-Discourse::Application.routes.append do
+Discourse::Application.routes.prepend do
   mount ::VerifiableCredentials::Engine, at: "vc"
 end

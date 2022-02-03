@@ -2,3 +2,6 @@ en:
   site_settings:
     verifiable_credentials_provider: "The verifiable credentials provider"
     verifiable_credentials_verifier_domain: "The domain of the verifier"
+    verifiable_credentials_verifier_did: "The verifier DID"
+    verifiable_credentials_mattr_client_id: "MATTR Client Id"
+    verifiable_credentials_mattr_client_secret: "MATTR Client Secret"

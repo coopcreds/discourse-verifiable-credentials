@@ -14,6 +14,11 @@ en:
       present:
         title: "Present your credentials"
         instructions: Instructions
+        qr_code:
+          title: "Presentation template QR code"
+          failed: "Failed to retrieve a presentation template. Please contact the site administrator."
         provider:
           verifiable_credentials_ltd:
             description: Scan the QR Code and follow any prompts in the "VC Wallet" App. If your credentials check out you'll be automatically added to the group and redirected to the group's page.
+          mattr:
+            description: Scan the QR Code with the MATTR App. Once your credentials are verified you'll be automatically added to the group and redirected to the group's page.
