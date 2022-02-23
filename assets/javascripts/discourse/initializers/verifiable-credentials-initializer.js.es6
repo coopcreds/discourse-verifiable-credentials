@@ -13,14 +13,8 @@ export default {
     const messageBus = container.lookup("message-bus:main");
     const encodeParams = p => Object.entries(p).map(kv => kv.map(encodeURIComponent).join("=")).join("&");
 
-    messageBus.subscribe("/vc/verified", function (redirectUrl) {
+    messageBus.subscribe("/vc/verification-complete", function (redirectUrl) {
       window.location.href = redirectUrl;
-    });
-
-    messageBus.subscribe("/vc/failed-to-verify", function (params) {
-      if (params.resource_type === 'group') {
-        window.location.href = `/g/${params.resource_name}?failed_to_verify=true`;
-      }
     });
 
     withPluginApi('0.8.30', api => {

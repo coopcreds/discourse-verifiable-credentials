@@ -19,38 +19,41 @@ class ::VerifiableCredentials::VerifyController < ::ApplicationController
     setup_provider
     setup_handler
     process_credential
+
+    if @redirect_url
+      MessageBus.publish("/vc/verification-complete", @redirect_url, user_ids: [@user.id])
+    end
   end
 
   def verify_oidc
     setup_oidc_provider
     setup_handler
     process_credential(oidc: true)
+
+    if %w(http https).any? { |p| @redirect_url.include?(p) }
+      redirect_to @redirect_url
+    else
+      redirect_to path(@redirect_url)
+    end
   end
 
   protected
 
   def process_credential(oidc: false)
     result = @handler.perform(@data, oidc: oidc)
+    @redirect_url = nil
 
     if result.success?
-
       if @resource_type == 'group'
         @resource.add(@user)
       end
 
-      redirect_url = @resource.custom_fields['verifiable_credentials_redirect']
-      redirect_url = @resource.url if !redirect_url && @resource.respond_to(:url)
-
-      MessageBus.publish("/vc/verified", redirect_url, user_ids: [@user.id])
+      @redirect_url = @resource.custom_fields['verifiable_credentials_redirect'] || "/"
     else
-      params = {
-        resource_type: @resource_type,
-        resource_name: @resource.name
-      }
-      MessageBus.publish("/vc/failed-to-verify", params, user_ids: [@user.id])
+      if @resource_type == 'group'
+        @redirect_url = "/g/#{@resource.name}?failed_to_verify=true"
+      end
     end
-
-    redirect_to path("/")
   end
 
   def setup_handler
