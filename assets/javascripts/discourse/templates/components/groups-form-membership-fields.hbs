@@ -85,13 +85,13 @@
           value=model.membership_request_template}}
     </div>
   {{/if}}
-  
+
   <label>
     {{input type="checkbox"
         class="group-form-allow-membership-verification"
         checked=model.custom_fields.allow_membership_by_verifiable_credentials
         disabled=disableMembershipByVerifiableCredentials}}
-    
+
     {{i18n "groups.allow_membership_by_verifiable_credentials"}}
   </label>
 </div>
@@ -101,12 +101,21 @@
     <label class="control-label">{{i18n "groups.manage.membership.verifiable_credentials"}}</label>
     <div>
       <label for="verifiable-credentials-redirect">
-        {{i18n "groups.verifiable_credentials_credential"}}
+        {{i18n "groups.verifiable_credentials_credential_identifier"}}
       </label>
 
-      {{input name="verifiable-credentials-credential"
+      {{input name="verifiable-credentials-credential-identifier"
           class="verifiable-credentials-credential input-xxlarge"
-          value=model.custom_fields.verifiable_credentials_credential}}
+          value=model.custom_fields.verifiable_credentials_credential_identifier}}
+    </div>
+    <div>
+      <label for="verifiable-credentials-redirect">
+        {{i18n "groups.verifiable_credentials_credential_claims"}}
+      </label>
+
+      {{input name="verifiable-credentials-credential-claims"
+          class="verifiable-credentials-credential input-xxlarge"
+          value=model.custom_fields.verifiable_credentials_credential_claims}}
     </div>
     <div>
       <label for="verifiable-credentials-redirect">

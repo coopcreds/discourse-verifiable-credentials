@@ -2,26 +2,43 @@
 
 class ::VerifiableCredentials::Verifier
   attr_reader :handler,
-              :domain
+              :domain,
+              :requires_key
 
-  def initialize(handler)
+  def initialize(handler, require_key: false)
     @handler = handler
     @domain = SiteSetting.verifiable_credentials_verifier_domain
+    @requires_key = require_key
+  end
+
+  def ready?
+    return false unless @domain
+
+    if requires_key
+      @api_key = get_api_key
+      !!@api_key
+    else
+      true
+    end
+  end
+
+  def get_api_key
+    ## Implementated by verifier classes
   end
 
   def create_presentation_request
     ## Implementated by verifier classes
-  end 
+  end
 
-  def verify(data)
+  def presentation_request_uri
     ## Implementated by verifier classes
   end
 
-  def request(type, path, body = {})
-    if requires_key
-      api_key = get_api_key
-    end
+  def verify(data, opts = {})
+    ## Implementated by verifier classes
+  end
 
+  def request(type, path, body = {}, url_encoded: false)
     headers = {
       "Accept" => "*/*"
     }
@@ -29,17 +46,23 @@ class ::VerifiableCredentials::Verifier
       method: type
     }
 
-    if requires_key && api_key
-      headers["Authorization"] = "Bearer #{api_key}"
+    if requires_key && @api_key
+      headers["Authorization"] = "Bearer #{@api_key}"
     end
+
+    uri = URI("https://#{@domain}/#{path}")
 
     if body.present?
-      headers["Content-Type"] = "application/json"
-      args[:body] = body.to_json
+      if url_encoded
+        headers["Content-Type"] = "application/x-www-form-urlencoded"
+        args[:body] = URI.encode_www_form(body)
+      else
+        headers["Content-Type"] = "application/json"
+        args[:body] = body.to_json
+      end
     end
 
-    url = "https://#{@domain}/#{path}"
-    connection = Excon.new(url, :headers => headers)
+    connection = Excon.new(uri.to_s, :headers => headers)
     response = connection.request(args)
 
     return false unless [201, 200].include?(response.status)
@@ -50,9 +73,5 @@ class ::VerifiableCredentials::Verifier
     rescue => error
       false
     end
-  end
-
-  def get_api_key
-    ## Implementated by verifier classes
   end
 end

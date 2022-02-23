@@ -4,6 +4,7 @@ import { camelize } from "@ember/string";
 import { scheduleOnce } from "@ember/runloop";
 import { alias } from "@ember/object/computed";
 import { ajax } from "discourse/lib/ajax";
+import I18n from "I18n";
 
 export default Controller.extend({
   loadingQRCode: false,
@@ -27,12 +28,12 @@ export default Controller.extend({
 
     this.set('loadingQRCode', true);
 
-    ajax('/vc/create-presentation-request', {
+    ajax('/vc/presentation/mattr/create', {
       type: 'POST',
       data: {
         resource_type: 'group',
         resource_id: group.id,
-        type: 'mattr'
+        provider: 'mattr'
       }
     }).then(result => {
       this.set('loadingQRCode', false);
@@ -55,11 +56,11 @@ export default Controller.extend({
         "resource_type": "group"
       },
       "policyMatch": {
-        "type": group.custom_fields.verifiable_credentials_credential
+        "type": group.custom_fields.verifiable_credentials_credential_identifier
       },
       "returnResults": [
         {
-          "internet": `${discourseUrl}/vc/verify-vcltd`
+          "internet": `${discourseUrl}/vc/verify/verifiable_credentials_ltd`
         }
       ]
     };

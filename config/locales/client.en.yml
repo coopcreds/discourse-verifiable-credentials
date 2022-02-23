@@ -6,7 +6,8 @@ en:
           verifiable_credentials: Verifiable Credentials
       allow_membership_by_verifiable_credentials: "Allow users to join by verifiable credentials"
       verifiable_credentials_redirect: "Redirect users to url upon verification"
-      verifiable_credentials_credential: "Credential that grants access to this group"
+      verifiable_credentials_credential_identifier: "Identifier of credential that grants access to this group"
+      verifiable_credentials_credential_claims: "Claim(s) in credential that grants access to this group. Comma seperated list of key:value pairs."
       verifiable_credentials_message: "Message to show before presenting credential"
 
     verifiable_credentials:
@@ -14,6 +15,7 @@ en:
       present:
         title: "Present your credentials"
         instructions: Instructions
+        failed: "Unfortunately we were unable to verify your credentials for this resource."
         qr_code:
           title: "Presentation template QR code"
           failed: "Failed to retrieve a presentation template. Please contact the site administrator."

@@ -2,6 +2,8 @@ en:
   site_settings:
     verifiable_credentials_provider: "The verifiable credentials provider"
     verifiable_credentials_verifier_domain: "The domain of the verifier"
-    verifiable_credentials_verifier_did: "The verifier DID"
-    verifiable_credentials_mattr_client_id: "MATTR Client Id"
-    verifiable_credentials_mattr_client_secret: "MATTR Client Secret"
+    verifiable_credentials_mattr_verifier_did: "MATTR Verifier DID. Only use if you are the credential verifier."
+    verifiable_credentials_mattr_verifier_id: "MATTR Verifier ID. Contact the credential verifier to obtain the verifier id."
+    verifiable_credentials_mattr_client_id: "MATTR Client ID. Contact the credential verifier to obtain your client id."
+    verifiable_credentials_mattr_client_secret: "MATTR Client Secret. Contact the credential verifier to obtain your client secret."
+    verifiable_credentials_mattr_oidc: "Use MATTR OIDC Verifier"

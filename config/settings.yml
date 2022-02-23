@@ -9,6 +9,10 @@ plugins:
   verifiable_credentials_verifier_domain:
     client: true
     default: ""
-  verifiable_credentials_verifier_did: ""
+  verifiable_credentials_mattr_oidc:
+    client: true
+    default: true
+  verifiable_credentials_mattr_verifier_id: ""
   verifiable_credentials_mattr_client_id: ""
   verifiable_credentials_mattr_client_secret: ""
+  verifiable_credentials_mattr_verifier_did: ""

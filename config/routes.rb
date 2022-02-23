@@ -1,7 +1,8 @@
 VerifiableCredentials::Engine.routes.draw do
-  post "create-presentation-request" => "presentation#create_request"
-  post "verify-vcltd" => "verify#verify"
-  post "verify-mattr" => "verify#verify"
+  get "presentation/:provider/initiate" => "presentation#initiate"
+  post "presentation/:provider/create" => "presentation#create"
+  post "verify/:provider" => "verify#verify"
+  get "verify/:provider/oidc" => "verify#verify_oidc"
 end
 
 Discourse::Application.routes.prepend do
