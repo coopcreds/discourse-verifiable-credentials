@@ -10,7 +10,6 @@ register_asset "stylesheets/verifiable-credentials.scss"
 
 if respond_to?(:register_svg_icon)
   register_svg_icon "passport"
-  register_svg_icon "cubes"
 end
 
 after_initialize do
