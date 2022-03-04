@@ -1,0 +1,27 @@
+{
+  "id": "78aeb502-5d85-4794-b3a6-165584b72a9a",
+  "verifierDid": "did:key:z6Mkv7Lv5vJqfRs3fxVeJu1y8xDKXFnDZ8WcudMwZSpQhVUU",
+  "presentationTemplateId": "b50a112b-74e0-4584-bc5e-31001ac8490f",
+  "claimMappings": [
+    {
+      "jsonLdFqn": "http://schema.org/givenName",
+      "oidcClaim": "given_name"
+    },
+    {
+      "jsonLdFqn": "http://schema.org/familyName",
+      "oidcClaim": "family_name"
+    },
+    {
+      "jsonLdFqn": "http://schema.org/email",
+      "oidcClaim": "email"
+    },
+    {
+      "jsonLdFqn": "https://coopcreds.com/cooperative",
+      "oidcClaim": "https://coopcreds.com/cooperative"
+    },
+    {
+      "jsonLdFqn": "https://coopcreds.com/cooperativeMembershipType",
+      "oidcClaim": "https://coopcreds.com/cooperativeMembershipType"
+    }
+  ]
+}

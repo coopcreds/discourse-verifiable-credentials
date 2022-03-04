@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-class ::VerifiableCredentials::VerifyResult
+class ::VerifiableCredentials::Result
   attr_accessor :success,
-                :resource
+                :redirect_url
 
   def initialize
     @success = false

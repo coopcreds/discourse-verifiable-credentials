@@ -10,35 +10,112 @@ register_asset "stylesheets/verifiable-credentials.scss"
 
 if respond_to?(:register_svg_icon)
   register_svg_icon "passport"
+  register_svg_icon "cubes"
 end
 
 after_initialize do
   %w[
     ../lib/verifiable_credentials/engine.rb
-    ../lib/verifiable_credentials/verify.rb
-    ../lib/verifiable_credentials/verify_result.rb
+    ../lib/verifiable_credentials/resource.rb
+    ../lib/verifiable_credentials/handler.rb
+    ../lib/verifiable_credentials/result.rb
+    ../lib/verifiable_credentials/user_record.rb
     ../lib/verifiable_credentials/verifier.rb
     ../lib/verifiable_credentials/verifiers/mattr.rb
     ../lib/verifiable_credentials/verifiers/verifiable_credentials_ltd.rb
-    ../app/controllers/verifiable_credentials/verify_controller.rb
+    ../app/serializers/basic_badge_serializer.rb
+    ../app/serializers/verifiable_credentials/resource_serializer.rb
+    ../app/serializers/verifiable_credentials/user_record_serializer.rb
+    ../app/controllers/verifiable_credentials/verification_controller.rb
+    ../app/controllers/verifiable_credentials/user_record_controller.rb
     ../app/controllers/verifiable_credentials/presentation_controller.rb
     ../config/routes.rb
   ].each do |path|
     load File.expand_path(path, __FILE__)
   end
 
-  register_editable_group_custom_field(:allow_membership_by_verifiable_credentials)
-  register_group_custom_field_type('allow_membership_by_verifiable_credentials', :boolean)
-
-  [
-    :verifiable_credentials_redirect,
-    :verifiable_credentials_credential_identifier,
-    :verifiable_credentials_credential_claims,
-    :verifiable_credentials_message
-  ].each do |key|
+  {
+    verifiable_credentials_redirect: :string,
+    verifiable_credentials_credential_identifier: :string,
+    verifiable_credentials_credential_claims: :string,
+    verifiable_credentials_allow_membership: :boolean,
+    verifiable_credentials_show_button: :boolean,
+    verifiable_credentials_include_tags: :boolean
+  }.each do |key, type|
     register_editable_group_custom_field(key)
-    register_group_custom_field_type(key.to_s, :string)
+    register_group_custom_field_type(key.to_s, type)
   end
 
   add_to_serializer(:basic_group, :custom_fields) { object.custom_fields }
+  add_to_serializer(:site, :credential_badges) do
+    badge_ids = VerifiableCredentials::Resource.split_badge_claims(
+      SiteSetting.verifiable_credentials_badge_claims
+    ).keys
+
+    if badge_ids.any?
+      ActiveModel::ArraySerializer.new(
+        Badge.where(id: badge_ids),
+        each_serializer: BasicBadgeSerializer,
+        root: false
+      )
+    end
+  end
+
+  register_user_custom_field_type(:verifiable_credentials_record, :json)
+
+  add_to_class(:user, :verifiable_credentials_records) do
+    if !custom_fields[:verifiable_credentials_record].nil?
+      [*custom_fields[:verifiable_credentials_record]].map do |credential|
+        JSON.parse(credential).with_indifferent_access
+      end
+    else
+      []
+    end
+  end
+
+  add_to_class(:user, :verifiable_credentials) do
+    if verifiable_credentials_records.length
+      verifiable_credentials_records.map do |record|
+        VerifiableCredentials::UserRecord.new(record)
+      end
+    else
+      []
+    end
+  end
+
+  add_to_class(:user, :add_verifiable_credentials_record) do |did: nil, provider: nil, oidc: nil, resources: [], error: nil|
+    records = verifiable_credentials_records
+    record = {
+      did: did,
+      oidc: oidc,
+      provider: provider,
+      resources: VerifiableCredentials::Resource.join(resources),
+      created_at: Time.now.iso8601
+    }
+
+    if error
+      record[:error] = error
+    end
+
+    records << record
+    custom_fields[:verifiable_credentials_record] = records.map(&:to_json)
+
+    save_custom_fields(true)
+  end
+
+  add_to_serializer(:current_user, :verifiable_credential_badges) do
+    badge_ids = VerifiableCredentials::Resource.split_badge_claims(
+      SiteSetting.verifiable_credentials_badge_claims
+    ).keys
+
+    if badge_ids.any?
+      ActiveModel::ArraySerializer.new(
+        object.badges.where(id: badge_ids),
+        each_serializer: BasicBadgeSerializer,
+        root: false
+      )
+    else
+      []
+    end
+  end
 end

@@ -9,6 +9,6 @@ module ::VerifiableCredentials
   end
 
   def self.base_url
-    Discourse.base_url
+    Rails.env.development? ? "https://4322-88-93-97-77.ngrok.io" : Discourse.base_url
   end
 end

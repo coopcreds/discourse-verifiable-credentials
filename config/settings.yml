@@ -2,17 +2,30 @@ plugins:
   verifiable_credentials_provider:
     type: enum
     client: true
-    default: ""
+    default: "mattr"
     choices:
-      - verifiable_credentials_ltd
       - mattr
   verifiable_credentials_verifier_domain:
     client: true
     default: ""
-  verifiable_credentials_mattr_oidc:
+  verifiable_credentials_oidc:
     client: true
-    default: true
+    default: false
   verifiable_credentials_mattr_verifier_id: ""
   verifiable_credentials_mattr_client_id: ""
   verifiable_credentials_mattr_client_secret: ""
-  verifiable_credentials_mattr_verifier_did: ""
+  verifiable_credentials_mattr_messaging_did: ""
+  verifiable_credentials_badge_claims:
+    default: ""
+    type: list
+    list_type: simple
+  verifiable_credentials_homepage:
+    default: false
+    client: true
+  verifiable_credentials_homepage_groups:
+    default: ""
+    type: list
+    client: true
+  verifiable_credentials_homepage_include_badges:
+    default: false
+    client: true

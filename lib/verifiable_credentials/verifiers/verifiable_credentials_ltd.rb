@@ -5,7 +5,7 @@ class ::VerifiableCredentials::Verifier::VerifiableCredentialsLtd < VerifiableCr
     request("POST", "v1/decisionBasicAuthn",
       atts: false,
       policyMatch: {
-        type: @resource.custom_fields[:verifiable_credentials_credential_identifier]
+        type: @handler.credential_identifier
       },
       vpjwt: data
     )

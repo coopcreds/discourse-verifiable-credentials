@@ -5,6 +5,8 @@ class ::VerifiableCredentials::Verifier
               :domain,
               :requires_key
 
+  attr_accessor :api_key
+
   def initialize(handler, require_key: false)
     @handler = handler
     @domain = SiteSetting.verifiable_credentials_verifier_domain
@@ -12,10 +14,10 @@ class ::VerifiableCredentials::Verifier
   end
 
   def ready?
-    return false unless @domain
+    return false unless @domain.present?
 
     if requires_key
-      @api_key = get_api_key
+      @api_key = get_api_key unless @api_key.present?
       !!@api_key
     else
       true
@@ -38,7 +40,7 @@ class ::VerifiableCredentials::Verifier
     ## Implementated by verifier classes
   end
 
-  def request(type, path, body = {}, url_encoded: false)
+  def request(type, path, body: {}, url_encoded: false)
     headers = {
       "Accept" => "*/*"
     }
@@ -46,7 +48,7 @@ class ::VerifiableCredentials::Verifier
       method: type
     }
 
-    if requires_key && @api_key
+    if @api_key.present?
       headers["Authorization"] = "Bearer #{@api_key}"
     end
 
@@ -62,7 +64,7 @@ class ::VerifiableCredentials::Verifier
       end
     end
 
-    connection = Excon.new(uri.to_s, :headers => headers)
+    connection = Excon.new(uri.to_s, headers: headers)
     response = connection.request(args)
 
     return false unless [201, 200].include?(response.status)

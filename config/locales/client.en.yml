@@ -4,14 +4,20 @@ en:
       manage:
         membership:
           verifiable_credentials: Verifiable Credentials
-      allow_membership_by_verifiable_credentials: "Allow users to join by verifiable credentials"
-      verifiable_credentials_redirect: "Redirect users to url upon verification"
-      verifiable_credentials_credential_identifier: "Identifier of credential that grants access to this group"
-      verifiable_credentials_credential_claims: "Claim(s) in credential that grants access to this group. Comma seperated list of key:value pairs."
-      verifiable_credentials_message: "Message to show before presenting credential"
+      verifiable_credentials_allow_membership: "Allow users to join by verifiable credentials."
+      verifiable_credentials_redirect: "Redirect users to url upon verification."
+      verifiable_credentials_credential_identifier: "Identifier of credential that grants access to this group."
+      verifiable_credentials_credential_claims: "Cumulative list of claim(s) that grants access to this group. Format: key:value."
+      verifiable_credentials_show_button: "Show verifiable credentials button on this group to non members."
+      verifiable_credentials_include_tags: "Include verifiable credential tag claims in the verifiable presentation for this group."
 
     verifiable_credentials:
-      button: "Verify Credentials"
+      button: "Verify your credentials"
+
+      homepage:
+        group: "Get access to the %{group_name} group."
+        badge: "Get the %{badge_name} badge."
+
       present:
         title: "Present your credentials"
         instructions: Instructions
@@ -24,3 +30,26 @@ en:
             description: Scan the QR Code and follow any prompts in the "VC Wallet" App. If your credentials check out you'll be automatically added to the group and redirected to the group's page.
           mattr:
             description: Scan the QR Code with the MATTR App. Once your credentials are verified you'll be automatically added to the group and redirected to the group's page.
+
+      user:
+        label: Credentials
+        records:
+          label: Records
+          none: No records
+          created_at:
+            label: Created
+            title: Record created at
+          did:
+            label: DID
+            title: Credential Transaction DID
+          resources:
+            label: Resources
+            group:
+              verified: You were added to the '%{name}' group after verification.
+              not_verified: You weren't verified for the '%{name}' group.
+            badge:
+              verified: You were granted the '%{name}' after verification.
+              not_verified: You weren't verified for the '%{name}' badge.
+            toggle: Resources
+          message:
+            label: Message

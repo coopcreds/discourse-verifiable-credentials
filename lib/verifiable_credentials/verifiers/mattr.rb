@@ -1,6 +1,10 @@
 # frozen_string_literal: true
 
 class ::VerifiableCredentials::Verifier::Mattr < ::VerifiableCredentials::Verifier
+  def build_state
+    "#{@handler.user.id}~~#{VerifiableCredentials::Resource.join(@handler.resources)}"
+  end
+
   def presentation_request_uri
     verifier_id = SiteSetting.verifiable_credentials_mattr_verifier_id
     client_id = SiteSetting.verifiable_credentials_mattr_client_id
@@ -15,31 +19,34 @@ class ::VerifiableCredentials::Verifier::Mattr < ::VerifiableCredentials::Verifi
       client_id: client_id,
       redirect_uri: "#{VerifiableCredentials.base_url}/vc/verify/mattr/oidc",
       scope: "openid openid_credential_presentation",
-      state: "#{@handler.resource_type}:#{@handler.resource.id}:#{@handler.user.id}",
-      nonce: SecureRandom.hex(10)
+      state: build_state,
+      nonce: ""
     )
     uri.to_s
   end
 
   def create_presentation_request
-    verifier_did = SiteSetting.verifiable_credentials_mattr_verifier_did
-    verifier_document = request('GET', "core/v1/dids/#{verifier_did}")
-    return false if !verifier_document
+    messaging_did = SiteSetting.verifiable_credentials_mattr_messaging_did
+    messaging_document = request('GET', "core/v1/dids/#{messaging_did}")
+    return false if !messaging_document
 
-    body = {
-      "challenge": "#{@handler.resource_type}:#{@handler.resource.id}:#{@handler.user.id}",
-      "did": verifier_did,
-      "templateId": @handler.resource.custom_fields[:verifiable_credentials_credential_identifier],
-      "callbackUrl": "#{VerifiableCredentials.base_url}/vc/verify/mattr"
+    presentation_template_id = @handler.credential_identifier
+    return false if !presentation_template_id
+
+    presentation_body = {
+      challenge: build_state,
+      did: messaging_did,
+      templateId: presentation_template_id,
+      callbackUrl: "#{VerifiableCredentials.base_url}/vc/verify/mattr"
     }
-    result = request('POST', 'core/v1/presentations/requests', body)
+    result = request('POST', 'core/v1/presentations/requests', body: presentation_body)
     return false if !result
 
-    jws = request('POST', 'core/v1/messaging/sign',
-      didUrl: verifier_document['didDocument']['authentication'][0],
+    signing_body = {
+      didUrl: messaging_document['didDocument']['authentication'][0],
       payload: result['request']
-    )
-
+    }
+    jws = request('POST', 'core/v1/messaging/sign', body: signing_body)
     jws
   end
 
@@ -50,10 +57,10 @@ class ::VerifiableCredentials::Verifier::Mattr < ::VerifiableCredentials::Verifi
       client_secret = SiteSetting.verifiable_credentials_mattr_client_secret
       code = data[:code]
 
-      return false unless verifier_id.present? &&
-        client_id.present? &&
-        client_secret.present? &&
-        code.present?
+      unless verifier_id.present? && client_id.present? && client_secret.present? && code.present?
+        @handler.error = "Incorrect site configuration"
+        return false
+      end
 
       body = {
         client_id: client_id,
@@ -63,32 +70,26 @@ class ::VerifiableCredentials::Verifier::Mattr < ::VerifiableCredentials::Verifi
         redirect_uri: "#{VerifiableCredentials.base_url}/vc/verify/mattr/oidc"
       }
 
-      token_result = request('POST', "ext/oidc/v1/verifiers/#{verifier_id}/token", body, url_encoded: true)
-      return false unless token_result
-
-      token = JWT.decode token_result['id_token'], nil, false
-      return false unless token.present?
-
-      token = token.first
-      claims = @handler.resource.custom_fields[:verifiable_credentials_credential_claims]
-
-      if claims.present?
-        claims = claims.split(',').reduce({}) do |result, c|
-          parts = c.rpartition(':')
-          result[parts.first] = parts.last
-          result
-        end
-        claims_in_token = token.slice(*claims.keys)
-
-        return false unless claims_in_token.present?
-        return false unless claims_in_token.all? do |k, v|
-          claims_in_token[k] === claims[k]
-        end
+      token = request('POST', "ext/oidc/v1/verifiers/#{verifier_id}/token", body, url_encoded: true)
+      unless token.present?
+        @handler.error = "Unable to retrieve token from verifier"
+        return false
       end
+
+      token['id_token'] = JWT.decode token['id_token'], nil, false
+      unless token['id_token'].present? && token['id_token'].first.is_a?(Hash)
+        @handler.error = "Invalid token returned from verifier"
+        return false
+      end
+
+      token['id_token'] = token['id_token'].first
+      @handler.token = token.with_indifferent_access
 
       true
     else
-      data['verified']
+      return false unless data.present? && data.is_a?(Hash)
+      @handler.token = data.with_indifferent_access
+      @handler.token[:verified]
     end
   end
 

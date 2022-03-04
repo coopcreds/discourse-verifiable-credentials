@@ -1,0 +1,17 @@
+{{#if single}}
+  {{resource-label resource=resource}}
+{{else}}
+  <button {{action "showResources"}} class="btn btn-toggle-resources" type="button">
+    {{i18n "verifiable_credentials.user.records.resources.toggle"}}
+  </button>
+
+  {{#if showResources}}
+    <div class="list-container">
+      <ul class="list">
+        {{#each record.resources as |resource|}}
+          <li>{{resource-label resource=resource}}</li>
+        {{/each}}
+      </ul>
+    </div>
+  {{/if}}
+{{/if}}
