@@ -79,13 +79,13 @@ class ::VerifiableCredentials::Handler
       if match_token_claims(resource.claims)
         resource.verification_success(@user)
 
-        if resources.size === 1
+        if resource.redirect_on_success.present?
           @result.redirect_url = resource.redirect_on_success
         end
       else
         resource.verification_failure(@user)
 
-        if resources.size === 1
+        if resource.redirect_on_failure.present?
           @result.redirect_url = resource.redirect_on_failure
         end
       end
