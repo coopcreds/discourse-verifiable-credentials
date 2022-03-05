@@ -8,9 +8,10 @@ en:
     verifiable_credentials_mattr_client_id: "MATTR Client ID. Contact the credential verifier to obtain your client id."
     verifiable_credentials_mattr_client_secret: "MATTR Client Secret. Contact the credential verifier to obtain your client secret."
     verifiable_credentials_badge_claims: "Badges granted by claims in a verfied credential. Format: badge_id~~claim:value."
-    verifiable_credentials_homepage: "Show a verifiable credentials presentation modal on the forum homepage."
-    verifiable_credentials_homepage_groups: "Include the claims for these groups in the verifiable presentation for the homepage modal."
-    verifiable_credentials_homepage_include_badges: "Include badge claims in the verifiable presentation for the homepage modal."
+    verifiable_credentials_header: "Show a verifiable credentials presentation button and panel in the header."
+    verifiable_credentials_header_groups: "Include the claims for these groups in the verifiable presentation for the header button."
+    verifiable_credentials_header_include_badges: "Include badge claims in the verifiable presentation for the header button."
+    verifiable_credentials_header_info_url: "Information URL shown in the footer of the header panel."
 
   verifiable_credentials:
     error: "Failed to verify your credentials. Error: %{error}"

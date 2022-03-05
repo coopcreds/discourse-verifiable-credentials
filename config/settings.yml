@@ -19,13 +19,16 @@ plugins:
     default: ""
     type: list
     list_type: simple
-  verifiable_credentials_homepage:
+  verifiable_credentials_header:
     default: false
     client: true
-  verifiable_credentials_homepage_groups:
+  verifiable_credentials_header_groups:
     default: ""
     type: list
     client: true
-  verifiable_credentials_homepage_include_badges:
+  verifiable_credentials_header_include_badges:
     default: false
+    client: true
+  verifiable_credentials_header_info_url:
+    default: ""
     client: true

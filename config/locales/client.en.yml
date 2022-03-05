@@ -12,14 +12,22 @@ en:
       verifiable_credentials_include_tags: "Include verifiable credential tag claims in the verifiable presentation for this group."
 
     verifiable_credentials:
-      button: "Verify your credentials"
+      button:
+        label: "Verify your Credentials"
 
-      homepage:
-        group: "Get access to the %{group_name} group."
-        badge: "Get the %{badge_name} badge."
+      header:
+        button:
+          title: "Verify your Credentials"
+        info: learn more
+        yours: your records
+        resource:
+          group:
+            description: "Get access to the %{group_name} group."
+          badge:
+            description: "Get the %{badge_name} badge."
 
       present:
-        title: "Present your credentials"
+        title: "Present your Credentials"
         instructions: Instructions
         failed: "Unfortunately we were unable to verify your credentials for this resource."
         qr_code:
@@ -40,8 +48,8 @@ en:
             label: Created
             title: Record created at
           did:
-            label: DID
-            title: Credential Transaction DID
+            label: Holder DID
+            title: Holder DID
           resources:
             label: Resources
             group:

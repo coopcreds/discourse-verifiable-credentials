@@ -70,7 +70,7 @@ class ::VerifiableCredentials::Verifier::Mattr < ::VerifiableCredentials::Verifi
         redirect_uri: "#{VerifiableCredentials.base_url}/vc/verify/mattr/oidc"
       }
 
-      token = request('POST', "ext/oidc/v1/verifiers/#{verifier_id}/token", body, url_encoded: true)
+      token = request('POST', "ext/oidc/v1/verifiers/#{verifier_id}/token", body: body, url_encoded: true)
       unless token.present?
         @handler.error = "Unable to retrieve token from verifier"
         return false
