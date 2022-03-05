@@ -18,41 +18,42 @@ export default createWidget("verifiable-credentials-header-panel", {
     const resourceDescriptions = this.resourceDescriptions();
     const resources = this.attrs.resources;
 
-    return h(
-      'div.verifiable-credentials-header-panel-contents', [
-        this.attach('verifiable-credentials-presentation-button', { resources }),
-        h('ul',
-          resourceDescriptions.map(description => {
-            return h('li', [
-              iconNode(description.icon),
-              h('span', description.text)
-            ]);
-          })
-        ),
-        h('hr'),
-        h('div.footer-links', this.footerLinks())
-      ]
-    );
+    return h("div.verifiable-credentials-header-panel-contents", [
+      this.attach("verifiable-credentials-presentation-button", { resources }),
+      h(
+        "ul",
+        resourceDescriptions.map((description) => {
+          return h("li", [
+            iconNode(description.icon),
+            h("span", description.text),
+          ]);
+        })
+      ),
+      h("hr"),
+      h("div.footer-links", this.footerLinks()),
+    ]);
   },
 
   footerLinks() {
     let links = [
-      this.attach('link', {
-        icon: 'user',
-        label: 'verifiable_credentials.header.yours',
-        actionParam: userPath(this.currentUser.username + "/credentials/records"),
+      this.attach("link", {
+        icon: "user",
+        label: "verifiable_credentials.header.yours",
+        actionParam: userPath(
+          this.currentUser.username + "/credentials/records"
+        ),
         action: "goToLink",
-      })
+      }),
     ];
 
     const infoUrl = this.siteSettings.verifiable_credentials_header_info_url;
     if (infoUrl) {
       links.push(
-        this.attach('link', {
-          icon: 'info-circle',
-          label: 'verifiable_credentials.header.info',
+        this.attach("link", {
+          icon: "info-circle",
+          label: "verifiable_credentials.header.info",
           actionParam: infoUrl,
-          action: "goToLink"
+          action: "goToLink",
         })
       );
     }
@@ -72,14 +73,21 @@ export default createWidget("verifiable-credentials-header-panel", {
     return resources.map((resource) => {
       let textAttrs = {};
       if (resource.type === "group") {
-        textAttrs.group_name = groups.find((group) => group.id === resource.id).name;
+        textAttrs.group_name = groups.find(
+          (group) => group.id === resource.id
+        ).name;
       }
       if (resource.type === "badge") {
-        textAttrs.badge_name = badges.find((badge) => badge.id === resource.id).name;
+        textAttrs.badge_name = badges.find(
+          (badge) => badge.id === resource.id
+        ).name;
       }
       return {
         icon: resourceIcons[resource.type],
-        text: I18n.t(`verifiable_credentials.header.resource.${resource.type}.description`, textAttrs),
+        text: I18n.t(
+          `verifiable_credentials.header.resource.${resource.type}.description`,
+          textAttrs
+        ),
       };
     });
   },
@@ -91,5 +99,5 @@ export default createWidget("verifiable-credentials-header-panel", {
   goToLink(url) {
     DiscourseURL.routeTo(url);
     this.sendWidgetAction("toggleVcPanelVisible");
-  }
+  },
 });

@@ -9,7 +9,7 @@ export default {
     const messageBus = container.lookup("message-bus:main");
     const siteSettings = container.lookup("site-settings:main");
     const site = container.lookup("site:main");
-    const currentUser = container.lookup('current-user:main');
+    const currentUser = container.lookup("current-user:main");
 
     messageBus.subscribe("/vc/verification-complete", function (redirectUrl) {
       const href = redirectUrl ? redirectUrl : "/";
@@ -46,7 +46,7 @@ export default {
         },
       });
 
-      api.attachWidgetAction('header', 'toggleVcPanelVisible', function() {
+      api.attachWidgetAction("header", "toggleVcPanelVisible", function () {
         this.state.vcPanelVisible = !this.state.vcPanelVisible;
         this.scheduleRerender();
       });
@@ -55,19 +55,23 @@ export default {
       const badges = credentialBadges(siteSettings, site, currentUser);
       let resources = [
         ...mapResource(groups, "group"),
-        ...mapResource(badges, "badge")
+        ...mapResource(badges, "badge"),
       ];
 
-      api.addHeaderPanel('verifiable-credentials-header-panel', 'vcPanelVisible', function() {
-        return {
-          resources,
-          groups,
-          badges
-        };
-      });
+      api.addHeaderPanel(
+        "verifiable-credentials-header-panel",
+        "vcPanelVisible",
+        function () {
+          return {
+            resources,
+            groups,
+            badges,
+          };
+        }
+      );
 
       if (siteSettings.verifiable_credentials_header && resources.length) {
-        api.addToHeaderIcons('verifiable-credentials-header-button');
+        api.addToHeaderIcons("verifiable-credentials-header-button");
       }
     });
   },

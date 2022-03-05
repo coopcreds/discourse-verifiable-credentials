@@ -26,8 +26,7 @@ function verify(user, resources, siteSettings) {
       window.location.hostname +
       ":" +
       window.location.port;
-    let path =
-      `/vc/presentation/${provider}/initiate?` + encodeParams(params);
+    let path = `/vc/presentation/${provider}/initiate?` + encodeParams(params);
     window.location.href = url + path;
   } else {
     const controller = showModal("verifiable-credentials-presentation", {
@@ -39,6 +38,4 @@ function verify(user, resources, siteSettings) {
   }
 }
 
-export {
-  verify
-};
+export { verify };

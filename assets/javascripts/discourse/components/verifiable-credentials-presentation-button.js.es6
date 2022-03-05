@@ -7,6 +7,6 @@ export default Component.extend({
   actions: {
     verifyCredentials() {
       verify(this.currentUser, this.resources, this.siteSettings);
-    }
-  }
+    },
+  },
 });

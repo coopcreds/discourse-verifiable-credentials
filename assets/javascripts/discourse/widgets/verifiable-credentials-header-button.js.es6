@@ -21,7 +21,7 @@ export default createWidget("verifiable-credentials-header-button", {
           "data-auto-route": true,
         },
       },
-      iconNode('passport')
+      iconNode("passport")
     );
   },
 
@@ -46,5 +46,5 @@ export default createWidget("verifiable-credentials-header-button", {
 
   headerWidget() {
     return this.parentWidget.parentWidget;
-  }
+  },
 });

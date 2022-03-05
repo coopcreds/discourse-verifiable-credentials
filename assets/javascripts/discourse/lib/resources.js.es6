@@ -16,26 +16,27 @@ function headerGroups(siteSettings, site, currentUser) {
   }
 
   const userGroups = currentUser.groups;
-  const groupNames = siteSettings.verifiable_credentials_header_groups.split("|");
+  const groupNames = siteSettings.verifiable_credentials_header_groups.split(
+    "|"
+  );
 
   return siteGroups.filter((group) => {
     return (
       groupNames.includes(group.name) &&
-        !userGroups.find((userGroup) => userGroup.id === group.id)
+      !userGroups.find((userGroup) => userGroup.id === group.id)
     );
   });
 }
 
 function credentialBadges(siteSettings, site, currentUser) {
   const siteCredBadges = site.credential_badges;
-  console.log(siteCredBadges);
   if (!siteCredBadges) {
     return [];
   }
 
   const userCredBadges = currentUser.verifiable_credential_badges;
   const userCredBadgeIds = userCredBadges.map((badge) => badge.id);
-  console.log(userCredBadges, userCredBadgeIds)
+
   return siteCredBadges.filter((badge) => !userCredBadgeIds.includes(badge.id));
 }
 
@@ -43,9 +44,4 @@ function mapResource(resources, type) {
   return resources.map((group) => ({ type, id: group.id }));
 }
 
-export {
-  joinResources,
-  headerGroups,
-  credentialBadges,
-  mapResource
-};
+export { joinResources, headerGroups, credentialBadges, mapResource };
