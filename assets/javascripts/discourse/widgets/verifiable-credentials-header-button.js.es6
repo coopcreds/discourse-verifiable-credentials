@@ -8,7 +8,7 @@ import I18n from "I18n";
 export default createWidget("verifiable-credentials-header-button", {
   tagName: "li.header-dropdown-toggle.verifiable-credentials-header-button",
 
-  html(attrs) {
+  html() {
     const headerWidget = this.headerWidget();
     return h(
       "a.icon",
@@ -20,13 +20,12 @@ export default createWidget("verifiable-credentials-header-button", {
           title: I18n.t("verifiable_credentials.header.button.title"),
           "data-auto-route": true,
         },
-      }, [
-        iconNode('passport')
-      ]
+      },
+      iconNode('passport')
     );
   },
 
-  buildClasses(attrs) {
+  buildClasses() {
     const headerWidget = this.headerWidget();
     let classes = [];
     if (headerWidget.state.vcPanelVisible) {

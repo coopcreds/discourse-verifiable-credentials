@@ -41,4 +41,4 @@ function verify(user, resources, siteSettings) {
 
 export {
   verify
-}
+};

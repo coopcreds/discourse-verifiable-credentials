@@ -1,8 +1,6 @@
 import { withPluginApi } from "discourse/lib/plugin-api";
-import vcHeaderButton from "../widgets/verifiable-credentials-header-button";
-import { headerGroups, credentialBadges, mapResource } from "../lib/resources";
+import { credentialBadges, headerGroups, mapResource } from "../lib/resources";
 import bootbox from "bootbox";
-import Site from "discourse/models/site";
 import I18n from "I18n";
 
 export default {
@@ -61,7 +59,7 @@ export default {
         resources.push(...mapResource(badges, "badge"));
       }
 
-      api.addHeaderPanel('verifiable-credentials-header-panel', 'vcPanelVisible', function(attrs, state) {
+      api.addHeaderPanel('verifiable-credentials-header-panel', 'vcPanelVisible', function() {
         return {
           resources,
           groups,

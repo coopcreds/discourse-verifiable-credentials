@@ -10,10 +10,9 @@ function joinResources(resources) {
 }
 
 function headerGroups(siteSettings, site, currentUser) {
-  const headerGroups = siteSettings.verifiable_credentials_header_groups;
   const siteGroups = site.groups;
   const userGroups = currentUser.groups;
-  const groupNames = headerGroups.split("|") || [];
+  const groupNames = siteSettings.verifiable_credentials_header_groups.split("|");
 
   return siteGroups.filter((group) => {
     return (

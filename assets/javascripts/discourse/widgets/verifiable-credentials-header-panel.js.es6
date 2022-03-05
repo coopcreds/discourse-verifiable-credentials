@@ -1,14 +1,13 @@
 import { createWidget } from "discourse/widgets/widget";
 import { h } from "virtual-dom";
 import { iconNode } from "discourse-common/lib/icon-library";
-import ComponentConnector from "discourse/widgets/component-connector";
 import DiscourseURL, { userPath } from "discourse/lib/url";
 import I18n from "I18n";
 
 export default createWidget("verifiable-credentials-header-panel", {
   tagName: "div.verifiable-credentials-header-panel",
 
-  html(attrs) {
+  html() {
     return this.attach("menu-panel", {
       maxWidth: 250,
       contents: () => this.panelContents(),
@@ -27,7 +26,7 @@ export default createWidget("verifiable-credentials-header-panel", {
             return h('li', [
               iconNode(description.icon),
               h('span', description.text)
-            ])
+            ]);
           })
         ),
         h('hr'),

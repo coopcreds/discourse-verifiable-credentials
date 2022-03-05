@@ -1,5 +1,4 @@
 import { createWidget } from "discourse/widgets/widget";
-import { iconNode } from "discourse-common/lib/icon-library";
 import { verify } from "../lib/credentials";
 
 export default createWidget("verifiable-credentials-presentation-button", {
