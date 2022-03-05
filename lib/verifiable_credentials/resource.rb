@@ -40,7 +40,7 @@ class ::VerifiableCredentials::Resource
         )
       elsif type === 'badge'
         self.class.split_badge_claims(
-          SiteSetting.verifiable_credentials_badge_claims
+          SiteSetting.verifiable_credentials_header_badges
         )[id]
       end
     end

@@ -9,7 +9,6 @@ en:
       verifiable_credentials_credential_identifier: "Identifier of credential that grants access to this group."
       verifiable_credentials_credential_claims: "Cumulative list of claim(s) that grants access to this group. Format: key:value."
       verifiable_credentials_show_button: "Show verifiable credentials button on this group to non members."
-      verifiable_credentials_include_tags: "Include verifiable credential tag claims in the verifiable presentation for this group."
 
     verifiable_credentials:
       button:

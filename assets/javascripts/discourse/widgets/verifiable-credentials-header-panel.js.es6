@@ -9,7 +9,7 @@ export default createWidget("verifiable-credentials-header-panel", {
 
   html() {
     return this.attach("menu-panel", {
-      maxWidth: 250,
+      maxWidth: 300,
       contents: () => this.panelContents(),
     });
   },

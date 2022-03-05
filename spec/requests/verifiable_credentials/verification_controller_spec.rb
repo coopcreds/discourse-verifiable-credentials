@@ -66,7 +66,7 @@ describe VerifiableCredentials::VerificationController do
   end
 
   it "grants access to resources when claims are verified" do
-    SiteSetting.verifiable_credentials_badge_claims = "#{badge.id}~~badge_holder:true"
+    SiteSetting.verifiable_credentials_header_badges = "#{badge.id}~~badge_holder:true"
     group.custom_fields[:verifiable_credentials_credential_claims] = "group_member:true"
     group.save_custom_fields(true)
 

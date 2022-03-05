@@ -11,6 +11,10 @@ function joinResources(resources) {
 
 function headerGroups(siteSettings, site, currentUser) {
   const siteGroups = site.groups;
+  if (!siteGroups) {
+    return [];
+  }
+
   const userGroups = currentUser.groups;
   const groupNames = siteSettings.verifiable_credentials_header_groups.split("|");
 
@@ -24,9 +28,14 @@ function headerGroups(siteSettings, site, currentUser) {
 
 function credentialBadges(siteSettings, site, currentUser) {
   const siteCredBadges = site.credential_badges;
+  console.log(siteCredBadges);
+  if (!siteCredBadges) {
+    return [];
+  }
+
   const userCredBadges = currentUser.verifiable_credential_badges;
   const userCredBadgeIds = userCredBadges.map((badge) => badge.id);
-
+  console.log(userCredBadges, userCredBadgeIds)
   return siteCredBadges.filter((badge) => !userCredBadgeIds.includes(badge.id));
 }
 

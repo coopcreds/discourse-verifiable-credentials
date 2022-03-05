@@ -53,11 +53,10 @@ export default {
 
       const groups = headerGroups(siteSettings, site, currentUser);
       const badges = credentialBadges(siteSettings, site, currentUser);
-      let resources = mapResource(groups, "group");
-
-      if (siteSettings.verifiable_credentials_header_include_badges) {
-        resources.push(...mapResource(badges, "badge"));
-      }
+      let resources = [
+        ...mapResource(groups, "group"),
+        ...mapResource(badges, "badge")
+      ];
 
       api.addHeaderPanel('verifiable-credentials-header-panel', 'vcPanelVisible', function() {
         return {

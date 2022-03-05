@@ -18,22 +18,14 @@ export default Component.extend({
     return canAccess && showButton;
   },
 
-  @discourseComputed("group.custom_fields.verifiable_credentials_include_tags")
-  resources(includeTags) {
+  @discourseComputed
+  resources() {
     let resources = [
       {
         type: "group",
         id: this.group.id,
       },
     ];
-
-    const badgeIds = this.site.credential_badges.map((b) => b.id);
-    if (includeTags && badgeIds) {
-      resources = resources.concat(
-        badgeIds.map((id) => ({ type: "badge", id }))
-      );
-    }
-
     return resources;
   },
 });

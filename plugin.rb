@@ -38,8 +38,7 @@ after_initialize do
     verifiable_credentials_credential_identifier: :string,
     verifiable_credentials_credential_claims: :string,
     verifiable_credentials_allow_membership: :boolean,
-    verifiable_credentials_show_button: :boolean,
-    verifiable_credentials_include_tags: :boolean
+    verifiable_credentials_show_button: :boolean
   }.each do |key, type|
     register_editable_group_custom_field(key)
     register_group_custom_field_type(key.to_s, type)
@@ -48,7 +47,7 @@ after_initialize do
   add_to_serializer(:basic_group, :custom_fields) { object.custom_fields }
   add_to_serializer(:site, :credential_badges) do
     badge_ids = VerifiableCredentials::Resource.split_badge_claims(
-      SiteSetting.verifiable_credentials_badge_claims
+      SiteSetting.verifiable_credentials_header_badges
     ).keys
 
     if badge_ids.any?
@@ -104,7 +103,7 @@ after_initialize do
 
   add_to_serializer(:current_user, :verifiable_credential_badges) do
     badge_ids = VerifiableCredentials::Resource.split_badge_claims(
-      SiteSetting.verifiable_credentials_badge_claims
+      SiteSetting.verifiable_credentials_header_badges
     ).keys
 
     if badge_ids.any?
