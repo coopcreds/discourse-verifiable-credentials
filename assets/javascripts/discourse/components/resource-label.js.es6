@@ -36,7 +36,7 @@ export default Component.extend({
   @discourseComputed("resource.type", "resource.id")
   model(type, id) {
     if (type === "group") {
-      const groups = this.site.groups;
+      const groups = this.site.credential_groups;
       return groups.find((g) => g.id === id);
     }
     if (type === "badge") {

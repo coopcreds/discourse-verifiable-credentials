@@ -75,7 +75,7 @@ export default createWidget("verifiable-credentials-header-panel", {
       if (resource.type === "group") {
         textAttrs.group_name = groups.find(
           (group) => group.id === resource.id
-        ).name;
+        ).full_name;
       }
       if (resource.type === "badge") {
         textAttrs.badge_name = badges.find(

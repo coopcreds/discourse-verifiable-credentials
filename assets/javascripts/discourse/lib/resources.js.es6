@@ -10,7 +10,7 @@ function joinResources(resources) {
 }
 
 function headerGroups(siteSettings, site, currentUser) {
-  const siteGroups = site.groups;
+  const siteGroups = site.credential_groups;
   if (!siteGroups) {
     return [];
   }

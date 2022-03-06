@@ -22,7 +22,8 @@ after_initialize do
     ../lib/verifiable_credentials/verifier.rb
     ../lib/verifiable_credentials/verifiers/mattr.rb
     ../lib/verifiable_credentials/verifiers/verifiable_credentials_ltd.rb
-    ../app/serializers/basic_badge_serializer.rb
+    ../app/serializers/verifiable_credentials/badge_serializer.rb
+    ../app/serializers/verifiable_credentials/group_serializer.rb
     ../app/serializers/verifiable_credentials/resource_serializer.rb
     ../app/serializers/verifiable_credentials/user_record_serializer.rb
     ../app/controllers/verifiable_credentials/verification_controller.rb
@@ -53,7 +54,19 @@ after_initialize do
     if badge_ids.any?
       ActiveModel::ArraySerializer.new(
         Badge.where(id: badge_ids),
-        each_serializer: BasicBadgeSerializer,
+        each_serializer: VerifiableCredentials::BadgeSerializer,
+        root: false
+      )
+    end
+  end
+
+  add_to_serializer(:site, :credential_groups) do
+    groups_names = SiteSetting.verifiable_credentials_header_groups.split('|')
+
+    if groups_names.any?
+      ActiveModel::ArraySerializer.new(
+        Group.where(name: groups_names),
+        each_serializer: VerifiableCredentials::GroupSerializer,
         root: false
       )
     end
@@ -109,7 +122,7 @@ after_initialize do
     if badge_ids.any?
       ActiveModel::ArraySerializer.new(
         object.badges.where(id: badge_ids),
-        each_serializer: BasicBadgeSerializer,
+        each_serializer: VerifiableCredentials::BadgeSerializer,
         root: false
       )
     else
