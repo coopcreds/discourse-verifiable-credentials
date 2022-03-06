@@ -4,7 +4,7 @@
 # about: Implements verifiable credentials in Discourse
 # version: 1.0
 # authors: Angus McLeod
-# url: https://github.com/paviliondev/discourse-verifiable-credentials
+# url: https://github.com/coopcreds/discourse-verifiable-credentials
 
 register_asset "stylesheets/verifiable-credentials.scss"
 
