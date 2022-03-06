@@ -11,7 +11,7 @@ function joinResources(resources) {
 
 function headerGroups(siteSettings, site, currentUser) {
   const siteGroups = site.credential_groups;
-  if (!siteGroups) {
+  if (!siteGroups || !currentUser) {
     return [];
   }
 
@@ -30,7 +30,7 @@ function headerGroups(siteSettings, site, currentUser) {
 
 function credentialBadges(siteSettings, site, currentUser) {
   const siteCredBadges = site.credential_badges;
-  if (!siteCredBadges) {
+  if (!siteCredBadges || !currentUser) {
     return [];
   }
 
