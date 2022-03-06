@@ -1,5 +1,6 @@
 import { withPluginApi } from "discourse/lib/plugin-api";
 import { credentialBadges, headerGroups, mapResource } from "../lib/resources";
+import { userPath } from "discourse/lib/url";
 import bootbox from "bootbox";
 import I18n from "I18n";
 
@@ -73,6 +74,12 @@ export default {
       if (siteSettings.verifiable_credentials_header && resources.length) {
         api.addToHeaderIcons("verifiable-credentials-header-button");
       }
+
+      api.addQuickAccessProfileItem({
+        icon: "passport",
+        href: userPath(currentUser.username + "/credentials/records"),
+        content: I18n.t("verifiable_credentials.user.label"),
+      });
     });
   },
 };
