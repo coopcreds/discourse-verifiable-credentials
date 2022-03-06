@@ -75,11 +75,13 @@ export default {
         api.addToHeaderIcons("verifiable-credentials-header-button");
       }
 
-      api.addQuickAccessProfileItem({
-        icon: "passport",
-        href: userPath(currentUser.username + "/credentials/records"),
-        content: I18n.t("verifiable_credentials.user.label"),
-      });
+      if (currentUser) {
+        api.addQuickAccessProfileItem({
+          icon: "passport",
+          href: userPath(currentUser.username + "/credentials/records"),
+          content: I18n.t("verifiable_credentials.user.label"),
+        });
+      }
     });
   },
 };
