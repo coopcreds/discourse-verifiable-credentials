@@ -47,8 +47,8 @@ en:
             label: Created
             title: Record created at
           did:
-            label: Holder DID
-            title: Holder DID
+            label: DID
+            title: DID
           resources:
             label: Resources
             group:
