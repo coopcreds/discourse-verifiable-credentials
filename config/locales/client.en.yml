@@ -4,11 +4,11 @@ en:
       manage:
         membership:
           verifiable_credentials: Verifiable Credentials
-      verifiable_credentials_allow_membership: "Allow users to join by verifiable credentials."
-      verifiable_credentials_redirect: "Redirect users to url upon verification."
-      verifiable_credentials_credential_identifier: "Identifier of credential that grants access to this group."
-      verifiable_credentials_credential_claims: "Cumulative list of claim(s) that grants access to this group. Format: key:value."
-      verifiable_credentials_show_button: "Show verifiable credentials button on this group to non members."
+          verifiable_credentials_allow_membership: "Allow users to join by verifiable credentials."
+          verifiable_credentials_redirect: "Redirect users to url upon verification."
+          verifiable_credentials_credential_identifier: "Identifier of credential that grants access to this group."
+          verifiable_credentials_credential_claims: "Cumulative list of claim(s) that grants access to this group. Format: key:value."
+          verifiable_credentials_show_button: "Show verifiable credentials button on this group to non members."
 
     verifiable_credentials:
       button:
@@ -17,8 +17,8 @@ en:
       header:
         button:
           title: "Verify your Credentials"
-        info: learn more
-        yours: your records
+        info: Learn more
+        yours: Your records
         resource:
           group:
             description: "Get access to the %{group_name} group."
