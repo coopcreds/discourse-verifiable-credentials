@@ -1,0 +1,17 @@
+en:
+  site_settings:
+    verifiable_credentials_provider: "Der verifizierbare Anbieter von Anmeldedaten."
+    verifiable_credentials_verifier_domain: "Der Bereich des Verifizierers."
+    verifiable_credentials_oidc: "Aktiviere verifizierbare Anmeldedaten OpenID Connect."
+    verifiable_credentials_mattr_messaging_did: "MATTR Messaging DID. Nur verwenden, wenn du der Verifizierer der Anmeldedaten bist."
+    verifiable_credentials_mattr_verifier_id: "MATTR-Prüfer-ID. Wende dich an die verifizierbare Stelle, um die Prüfer-ID zu erhalten."
+    verifiable_credentials_mattr_client_id: "MATTR-Client-ID. Wende dich an den Anmeldedaten-Verifizierer, um deine Client-ID zu erhalten."
+    verifiable_credentials_mattr_client_secret: "MATTR-Clientgeheimnis. Wende dich an den Anmeldedaten-Verifizierer, um dein Clientgeheimnis zu erhalten."
+    verifiable_credentials_header: "Zeigt eine Schaltfläche und ein Feld für verifizierbare Anmeldedaten in der Kopfzeile an."
+    verifiable_credentials_header_groups: "Nimm die Behauptungen für diese Gruppen in die verifizierbare Darstellung für die Kopfschaltfläche auf."
+    verifiable_credentials_header_badges: "Badge-Ansprüche in der verifizierbaren Darstellung für die Kopfschaltfläche. Format: badge_id~~claim:value."
+    verifiable_credentials_header_info_url: "Die Informations-URL wird in der Fußzeile des Kopfbereichs angezeigt."
+
+  verifiable_credentials:
+    error: "Deine Anmeldedaten konnten nicht verifiziert werden. Fehler: %{error}"
+    error_return: "Rückkehr nach Hause"
