@@ -1,4 +1,4 @@
-en:
+de:
   site_settings:
     verifiable_credentials_provider: "Der verifizierbare Anbieter von Anmeldedaten."
     verifiable_credentials_verifier_domain: "Der Bereich des Verifizierers."
