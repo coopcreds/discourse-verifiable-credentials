@@ -12,6 +12,6 @@ en:
     verifiable_credentials_header_badges: "Badge claims in the verifiable presentation for the header button. Format: badge_id~~claim:value."
     verifiable_credentials_header_info_url: "Information URL shown in the footer of the header panel."
 
-  error:
-    label: "Failed to verify your credentials. Error: %{error}"
-    return: "Return home"
+  verifiable_credentials:
+    error: "Failed to verify your credentials. Error: %{error}"
+    error_return: "Return home"
