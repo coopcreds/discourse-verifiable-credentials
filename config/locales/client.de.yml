@@ -1,0 +1,62 @@
+de:
+  js:
+    groups:
+      manage:
+        membership:
+          verifiable_credentials: Verifizierbare Anmeldedaten
+          verifiable_credentials_allow_membership: "Erlaube Benutzern, mit verifizierbaren Anmeldedaten beizutreten."
+          verifiable_credentials_redirect: "Leite die Nutzer bei der Verifizierung zur URL um."
+          verifiable_credentials_credential_identifier: "Kennung der Anmeldedaten, die den Zugang zu dieser Gruppe ermöglichen."
+          verifiable_credentials_credential_claims: "Kumulative Liste der Ansprüche, die den Zugang zu dieser Gruppe gewähren. Format: Schlüssel:Wert."
+          verifiable_credentials_show_button: "Zeigt verifizierbare Anmeldedaten in dieser Gruppe für Nichtmitglieder an."
+
+    verifiable_credentials:
+      button:
+        label: "Verifiziere deine Anmeldedaten"
+
+      header:
+        button:
+          title: "Verifiziere deine Anmeldedaten"
+        info: Mehr erfahren
+        yours: Deine Datensätze
+        resource:
+          group:
+            description: "Erhalte Zugriff auf die Gruppe %{group_name}."
+          badge:
+            description: "Hol dir das %{badge_name} Abzeichen."
+
+      present:
+        title: "Zeige deine Anmeldedaten"
+        instructions: Anleitungen
+        failed: "Leider konnten wir deine Anmeldedaten für diese Ressource nicht verifizieren."
+        qr_code:
+          title: "Präsentationsvorlage QR-Code"
+          failed: "Eine Präsentationsvorlage konnte nicht abgerufen werden. Bitte wende dich an den Website-Administrator."
+        provider:
+          verifiable_credentials_ltd:
+            description: Scanne den QR-Code und folge den Anweisungen in der "VC Wallet"-App. Wenn deine Anmeldedaten überprüft werden, wirst du automatisch der Gruppe hinzugefügt und zur Gruppenseite weitergeleitet.
+          mattr:
+            description: Scanne den QR-Code mit der MATTR-App. Sobald deine Anmeldedaten verifiziert sind, wirst du automatisch zur Gruppe hinzugefügt und zur Gruppenseite weitergeleitet.
+
+      user:
+        label: Anmeldedaten
+        records:
+          label: Datensätze
+          none: Keine Datensätze
+          created_at:
+            label: Erstellt
+            title: Datensatz erstellt am
+          did:
+            label: DID
+            title: DID
+          resources:
+            label: Ressourcen
+            group:
+              verified: Du wurdest nach der Überprüfung zur Gruppe "%{name}" hinzugefügt.
+              not_verified: Du wurdest nicht für die Gruppe '%{name}' verifiziert.
+            badge:
+              verified: Du hast den "%{name}" nach der Überprüfung erhalten.
+              not_verified: Du wurdest nicht für das '%{name}'-Abzeichen verifiziert.
+            toggle: Ressourcen
+          message:
+            label: Nachricht
